@@ -18,7 +18,7 @@
  * chronologically ordered list suitable for the Mandates tab.
  */
 
-import type {ChatMessage, MandateChainsFetched, MandateEntry, MandatesSigned, MonitoringStatus, PurchaseComplete, ToolCallArtifact,} from '../types';
+import type {ChatMessage, MandateChainsFetched, MandateEntry, MandatesSigned, PurchaseComplete} from '../types';
 
 type Draft = Omit<MandateEntry, 'id'>;
 
@@ -86,12 +86,6 @@ function purchaseEntries(msg: ChatMessage, pc: PurchaseComplete): Draft[] {
   return out;
 }
 
-function toolCallEntries(msg: ChatMessage, tc: ToolCallArtifact): Draft[] {
-  const out: Draft[] = [];
-  const args = tc.args ?? {};
-  return out;
-}
-
 /** Scan the message list and produce a deduplicated, chronological list. */
 export function deriveMandateEntries(messages: ChatMessage[]): MandateEntry[] {
   const drafts: Draft[] = [];
@@ -122,9 +116,6 @@ export function deriveMandateEntries(messages: ChatMessage[]): MandateEntry[] {
       }
       case 'purchase_complete':
         drafts.push(...purchaseEntries(msg, data as unknown as PurchaseComplete));
-        break;
-      case 'tool_call':
-        drafts.push(...toolCallEntries(msg, data as unknown as ToolCallArtifact));
         break;
       case 'mandate_chains_fetched': {
         const mcf = data as unknown as MandateChainsFetched;
