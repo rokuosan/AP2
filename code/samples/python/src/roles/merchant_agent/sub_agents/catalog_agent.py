@@ -76,9 +76,15 @@ async def find_items_workflow(
             model=model_name(),
             messages=[{
                 "role": "user",
-                "content": prompt + "\nReturn the products in the items array.",
+                "content": (
+                    f"Generate 3 unique, realistic, unbranded products for: "
+                    f"{catalog_search}. Return compact JSON with the products "
+                    "in an items array. Each item has a label and an amount "
+                    "with currency (ISO 4217 code) and value (number)."
+                ),
             }],
-            max_completion_tokens=1024,
+            max_completion_tokens=512,
+            temperature=0,
             extra_body={"chat_template_kwargs": {"enable_thinking": False}},
             response_format={
                 "type": "json_schema",
