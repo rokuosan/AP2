@@ -957,17 +957,17 @@
 <h2 id="_2">人が参加する場合<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>これは <code>direct</code> フローです。ユーザーがその場でクローズドな Payment Mandate と Checkout Mandate を承認します。</p>
 <figure>
-  <img src="../../assets/ap2_hp_flow.svg" style="width:800px" alt="AP2 の人が参加するフロー全体図">
-  <figcaption align="center">人が参加するフロー</figcaption>
+  <img alt="AP2 の人が参加するフロー全体図" src="../../../assets/ap2_hp_flow.svg" style="width:800px" />
+<br />
+<figcaption align="center">人が参加するフロー</figcaption>
 </figure>
-
 <p>このフローは2段階で進みます。</p>
 <p><strong>フェーズ1：買い物</strong></p>
 <figure>
-  <img src="../../assets/ap2_hp_shopping.svg" style="width:800px" alt="人が参加する買い物フロー">
-  <figcaption align="center">人が参加する買い物フロー</figcaption>
+  <img alt="人が参加する買い物フロー" src="../../../assets/ap2_hp_shopping.svg" style="width:800px" />
+<br />
+<figcaption align="center">人が参加する買い物フロー</figcaption>
 </figure>
-
 <ol>
 <li>ユーザーが Shopping Agent に買い物を依頼します。</li>
 <li>Shopping Agent は販売者と通信し、カートを作成します。</li>
@@ -976,10 +976,10 @@
 </ol>
 <p><strong>フェーズ2：支払い</strong></p>
 <figure>
-  <img src="../../assets/ap2_hp_payment.svg" style="width:800px" alt="人が参加する支払いフロー">
-  <figcaption align="center">人が参加する支払いフロー</figcaption>
+  <img alt="人が参加する支払いフロー" src="../../../assets/ap2_hp_payment.svg" style="width:800px" />
+<br />
+<figcaption align="center">人が参加する支払いフロー</figcaption>
 </figure>
-
 <ol>
 <li>Shopping Agent は Payment Mandate と Checkout Mandate の内容を組み立て、Trusted Surface を通じてユーザーに承認を求めます。</li>
 <li>User Credential モデルでは外部の Trusted Surface、Trusted Agent Provider モデルでは内部の Trusted Surface を利用できます。</li>
@@ -997,17 +997,17 @@
 </ol>
 <h2 id="_3">人が参加しない場合<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <figure>
-  <img src="../../assets/ap2_hnp_flow.svg" style="width:800px" alt="人が参加しないフロー">
-  <figcaption align="center">人が参加しないフロー</figcaption>
+  <img alt="人が参加しないフロー" src="../../../assets/ap2_hnp_flow.svg" style="width:800px" />
+<br />
+<figcaption align="center">人が参加しないフロー</figcaption>
 </figure>
-
 <p><strong>フェーズ1：買い物</strong></p>
 <p>このフローの買い物段階は2つに分かれます。最初にユーザーが Shopping Agent に買い物のタスクを設定し、次にエージェントがユーザーの介入なしでタスクを実行します。</p>
 <figure>
-  <img src="../../assets/ap2_hnp_shopping.svg" style="width:800px" alt="人が参加しない買い物フロー">
-  <figcaption align="center">人が参加しない買い物フロー</figcaption>
+  <img alt="人が参加しない買い物フロー" src="../../../assets/ap2_hnp_shopping.svg" style="width:800px" />
+<br />
+<figcaption align="center">人が参加しない買い物フロー</figcaption>
 </figure>
-
 <p><strong>フェーズ1a：買い物（人が参加）</strong></p>
 <p>ユーザーはオープンな Checkout Mandate と Payment Mandate を使って、自律的な購入をエージェントに許可します。</p>
 <ol>
@@ -1030,10 +1030,10 @@
 <p><strong>フェーズ2：支払い（人が不在）</strong></p>
 <p>エージェントはユーザーが事前に許可した Mandate を使ってチェックアウトを完了します。</p>
 <figure>
-  <img src="../../assets/ap2_hnp_payment.svg" style="width:800px" alt="人が参加しない支払いフロー">
-  <figcaption align="center">人が参加しない支払いフロー</figcaption>
+  <img alt="人が参加しない支払いフロー" src="../../../assets/ap2_hnp_payment.svg" style="width:800px" />
+<br />
+<figcaption align="center">人が参加しない支払いフロー</figcaption>
 </figure>
-
 <ol>
 <li>Shopping Agent は、受け取った Checkout に適用できるオープンな Mandate を選びます。</li>
 <li>Mandate の選択方法はこの仕様の対象外です。</li>

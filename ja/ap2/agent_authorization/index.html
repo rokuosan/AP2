@@ -1417,16 +1417,15 @@
 <li><strong>アクションの認可</strong>：検証者は、ユーザーに代わって操作する権限の証明をエージェントに求めます。エージェントは該当する Mandate を提示し、処理後に検証者から Receipt を受け取ります。</li>
 </ul>
 <div style="display: flex; justify-content: space-around;">
-  <figure>
-    <img src="../../assets/mandate_delegation_overview.svg" style="width:100%" alt="Mandate 委任の概要図">
+<figure>
+    <img alt="Mandate 委任の概要図" src="../../../assets/mandate_delegation_overview.svg" style="width:100%" />
     <figcaption align="center">Mandate の委任</figcaption>
   </figure>
-  <figure>
-    <img src="../../assets/action_authorization_overview.svg" style="width:100%" alt="アクション認可の概要図">
+<figure>
+    <img alt="アクション認可の概要図" src="../../../assets/action_authorization_overview.svg" style="width:100%" />
     <figcaption align="center">アクションの認可</figcaption>
   </figure>
 </div>
-
 <h2 id="mandate">Mandate の委任<a class="headerlink" href="#mandate" title="Permanent link">&para;</a></h2>
 <p>Mandate の委任は次のように行います。</p>
 <ul>
@@ -1444,10 +1443,10 @@
 <h3 id="user-credential">User Credential<a class="headerlink" href="#user-credential" title="Permanent link">&para;</a></h3>
 <p>この方式には、User Credential の発行者、資格情報を保持する Trusted Surface、エージェントの3者が関わります。検証者は発行者を信頼し、適切なユーザーの同意と認可を得た後でのみ Trusted Surface が Mandate を作成することを保証します。</p>
 <figure>
-  <img src="../../assets/mandate_delegation_user_credential.svg" style="width:100%" alt="User Credential を使う Mandate 委任">
-  <figcaption align="center">User Credential による Mandate 委任</figcaption>
+  <img alt="User Credential を使う Mandate 委任" src="../../../assets/mandate_delegation_user_credential.svg" style="width:100%" />
+<br />
+<figcaption align="center">User Credential による Mandate 委任</figcaption>
 </figure>
-
 <p>このフローの前に、発行者は Holder に User Credential を発行します。発行方法はこの文書の対象外です。標準的な方法の一例として <a href="">OpenID4VCI</a> があります。</p>
 <p>この方式では、ユーザーの VDC を提示する処理の一部として Mandate を作成し、委任します。</p>
 <blockquote>
@@ -1473,10 +1472,10 @@
 <h3 id="trusted-agent-provider">Trusted Agent Provider<a class="headerlink" href="#trusted-agent-provider" title="Permanent link">&para;</a></h3>
 <p>この方式では検証者が Agent Provider を直接信頼し、適切なユーザーの同意と認可を得た後でのみ Agent Provider が Mandate を作成することを保証します。事前に発行された資格情報は必要ありません。</p>
 <figure>
-  <img src="../../assets/mandate_delegation_trusted_agent_provider.svg" style="width:100%" alt="Trusted Agent Provider による Mandate 委任">
-  <figcaption align="center">Trusted Agent Provider による Mandate 委任</figcaption>
+  <img alt="Trusted Agent Provider による Mandate 委任" src="../../../assets/mandate_delegation_trusted_agent_provider.svg" style="width:100%" />
+<br />
+<figcaption align="center">Trusted Agent Provider による Mandate 委任</figcaption>
 </figure>
-
 <ul>
 <li>エージェントは Mandate の内容を作成し、Agent Provider が管理する Trusted Surface に渡します。たとえば、アプリケーション内の決定論的な別コンポーネントを使います。</li>
 <li>Agent Provider の Trusted Surface は Mandate の内容をユーザーに表示し、必要な承認と同意を取得します。</li>
@@ -1493,10 +1492,10 @@
 </ul>
 <p>オープンな Mandate を使うことで、ユーザーが不在の間もエージェントは自律的に操作できます。同時に、その動作を適切な範囲に制限できます。</p>
 <figure>
-  <img src="../../assets/mandate_chain_example.svg" style="width:800px" alt="オープンとクローズドな Mandate の連鎖例">
-  <figcaption align="center">Mandate の連鎖例</figcaption>
+  <img alt="オープンとクローズドな Mandate の連鎖例" src="../../../assets/mandate_chain_example.svg" style="width:800px" />
+<br />
+<figcaption align="center">Mandate の連鎖例</figcaption>
 </figure>
-
 <p>図は、同じ操作（A を使った doX）をユーザーが認可する2つの例を示します。「人が参加する」場合、ユーザーがクローズドな Mandate の内容に直接署名します。もう一方では、ユーザーがオープンな Mandate の内容に署名し、エージェントがユーザーに代わってクローズドな Mandate に署名します。認可を示すため、エージェントは Mandate の連鎖全体を提示します。</p>
 <p>オープンな Mandate は利用前に特定の取引に結び付ける必要があるため、暗号学的な Key Binding に対応しなければなりません。</p>
 <h3 id="sd-jwt-vc-mandate">SD-JWT VC を使う Mandate<a class="headerlink" href="#sd-jwt-vc-mandate" title="Permanent link">&para;</a></h3>
