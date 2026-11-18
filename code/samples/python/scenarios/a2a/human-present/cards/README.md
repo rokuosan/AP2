@@ -191,48 +191,15 @@ data:
 :                       : `CartMandate`, `PaymentMandate`) that are identified :
 :                       : within a Message's `DataParts`.                      :
 
-## Running with vLLM on Kubernetes
+## Running with vLLM
 
-Build the demo image from the repository root for the architecture of your
-Kubernetes nodes. Publish it to a registry your nodes can pull from and set
-the four image references in `kubernetes/deployment.yaml`, or import
-`ap2-cards:vllm` into the container runtime on each eligible node.
+For local runs, set `VLLM_BASE_URL` to the base URL of the OpenAI-compatible
+Chat Completions API (normally `http://<spark-host>:8000/v1`), and set
+`AGENT_MODEL` to the served model name. Set `VLLM_API_KEY` if the endpoint
+requires a bearer token. Enable automatic tool choice and configure the
+matching tool-call parser on vLLM, then start the demo with `run.sh`.
 
-```bash
-demo=code/samples/python/scenarios/a2a/human-present/cards
-docker build --platform linux/arm64 -f "$demo/kubernetes/Dockerfile" -t ap2-cards:vllm .
-```
-
-Create the namespace and model configuration before applying the manifest.
-Set `VLLM_BASE_URL` to the base for the OpenAI-compatible Chat Completions
-API, typically `http://<spark-host>:8000/v1` for a direct connection.
-Use the exact served model name. Enable automatic tool choice and configure
-the matching tool-call parser on vLLM.
-
-```bash
-kubectl create namespace ap2-demo
-kubectl -n ap2-demo create configmap ap2-cards-model \
-  --from-literal="VLLM_BASE_URL=$VLLM_BASE_URL" \
-  --from-literal="AGENT_MODEL=$AGENT_MODEL" \
-  --from-literal=PAYMENT_METHOD=CARD
-```
-
-For an endpoint that accepts a bearer token, set `VLLM_API_KEY` from your
-secret store and create the optional Secret.
-
-```bash
-printf '%s' "$VLLM_API_KEY" | kubectl -n ap2-demo create secret generic ap2-cards-model \
-  --from-file=VLLM_API_KEY=/dev/stdin
-```
-
-```bash
-kubectl -n ap2-demo apply -f "$demo/kubernetes/deployment.yaml"
-kubectl -n ap2-demo rollout status deployment/ap2-cards
-kubectl -n ap2-demo port-forward svc/ap2-cards 8000:8000
-```
-
-Open <http://localhost:8000> and select `shopping_agent`. The four demo
-processes share a Pod so the A2A endpoints can use loopback and AP2 signing
-keys can use a shared volume. Demo state is cleared when the Pod is replaced.
-After changing the ConfigMap or Secret, restart the deployment to reload it.
-To run the demo locally, set the same model variables and use `run.sh`.
+The AP2 cards image workflow builds on a native ARM64 runner and publishes
+to GHCR from `main`. The deployment and model configuration are managed in
+the infrastructure repository by Argo CD. Image Updater tracks the
+published ARM64 image digest.
