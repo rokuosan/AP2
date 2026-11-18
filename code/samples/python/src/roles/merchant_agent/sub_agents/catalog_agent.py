@@ -18,7 +18,7 @@ Returns Cart objects for browsing. The checkout JWT is created later
 when the user selects a cart (via the ``create_checkout`` tool).
 """
 
-from typing import Annotated, Any
+from typing import Any
 
 from a2a.server.tasks.task_updater import TaskUpdater
 from a2a.types import DataPart, Part, Task, TextPart
@@ -28,9 +28,13 @@ from common import message_utils
 from common.model_config import model_name, vllm_client, vllm_enabled
 from common.system_utils import DEBUG_MODE_INSTRUCTIONS
 from google import genai
-from pydantic import Field, TypeAdapter, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 
 from .. import storage
+
+
+class _CatalogResponse(BaseModel):
+  items: list[PaymentItem] = Field(min_length=3, max_length=3)
 
 
 async def find_items_workflow(
@@ -67,25 +71,27 @@ async def find_items_workflow(
 
   try:
     if vllm_enabled():
-      item_list = TypeAdapter(
-          Annotated[list[PaymentItem], Field(min_length=3, max_length=3)]
-      )
       async with vllm_client() as client:
         response = await client.chat.completions.create(
             model=model_name(),
-            messages=[{"role": "user", "content": prompt}],
+            messages=[{
+                "role": "user",
+                "content": prompt + "\nReturn the products in the items array.",
+            }],
+            max_completion_tokens=1024,
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
             response_format={
                 "type": "json_schema",
                 "json_schema": {
                     "name": "payment_items",
-                    "schema": item_list.json_schema(),
+                    "schema": _CatalogResponse.model_json_schema(),
                     "strict": True,
                 },
             },
         )
-      items = item_list.validate_json(
+      items = _CatalogResponse.model_validate_json(
           response.choices[0].message.content or ""
-      )
+      ).items
     else:
       async with genai.Client().aio as client:
         response = await client.models.generate_content(
