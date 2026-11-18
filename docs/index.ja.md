@@ -11,6 +11,9 @@ hide:
   </div>
 </div>
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/index.md)
+
 ## AP2 とは { #what-is-ap2 }
 
 **Agent Payments Protocol（AP2）**は、エージェントが関わる経済活動のためのオープンなプロトコルです。

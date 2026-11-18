@@ -1,5 +1,8 @@
 # フローの例
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/flows.md)
+
 AP2 のフローは「人が参加する場合」と「人が参加しない場合」の2種類です。
 
 - **人が参加する場合**：ユーザーがクローズドな Checkout Mandate と Payment Mandate を直接承認します。

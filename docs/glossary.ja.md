@@ -1,5 +1,8 @@
 # 用語集 { #glossary }
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/glossary.md)
+
 | 用語 | 略称 | 定義 | 同義語・関連語 |
 | :--- | :--- | :--- | :--- |
 | Action Authorization | | Verifier が Agent に、User に代わって特定のアクションを実行する権限の証明を求める手続き。 | |

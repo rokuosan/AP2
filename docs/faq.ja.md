@@ -1,5 +1,8 @@
 # よくある質問 { #frequently-asked-questions }
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/faq.md)
+
 1. 現在、このプロトコルで何ができますか？
 
     - AP2 のコアとなる Python ライブラリを使ったサンプルエージェントで、さまざまな買い物の流れを試せます。

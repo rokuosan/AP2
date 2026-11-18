@@ -1,5 +1,8 @@
 # 実装上の考慮事項
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/implementation_considerations.md)
+
 ## 役割
 
 各役割が担う処理と、決済エコシステムでの実装例を示します。

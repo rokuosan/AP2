@@ -1,5 +1,8 @@
 # Agentic Payment Protocol（AP2）v0.2
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md)
+
 Agentic Payment Protocol（AP2）は、エージェントが実行する支払い取引を保護するプロトコルです。[Agent Authorization モデル](agent_authorization.md)を利用します。
 
 この仕様では、AP2 の役割と検証責任、購入対象を保護する [Checkout Mandate](checkout_mandate.md) と Receipt、Checkout の支払いを保護する関連付けられた [Payment Mandate](payment_mandate.md) と Receipt、紛争時にこれらを証拠として使う方法を定めます。

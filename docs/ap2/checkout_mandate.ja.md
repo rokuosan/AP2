@@ -1,5 +1,8 @@
 # Checkout Mandate
 
+> このページは AP2 ドキュメントの非公式日本語訳です。
+> [英語の原文を読む](https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/checkout_mandate.md)
+
 Checkout Mandate は、チェックアウトの完了を認可するための Mandate です。
 
 ## 用途
