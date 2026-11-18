@@ -26,6 +26,7 @@ digital wallet to provide their shipping address.
 This is just one of many possible approaches.
 """
 
+from common.model_config import agent_model
 from common.retrying_llm_agent import RetryingLlmAgent
 from common.system_utils import DEBUG_MODE_INSTRUCTIONS
 
@@ -33,7 +34,7 @@ from . import tools
 
 
 shipping_address_collector = RetryingLlmAgent(
-    model="gemini-3.1-flash-lite-preview",
+    model=agent_model(),
     name="shipping_address_collector",
     max_retries=5,
     instruction="""

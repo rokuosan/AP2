@@ -25,6 +25,7 @@ from typing import Any
 
 from a2a.server.tasks.task_updater import TaskUpdater
 from a2a.types import Task
+from common.model_config import model_name, vllm_client, vllm_enabled
 from google import genai
 from google.genai import types
 
@@ -38,18 +39,18 @@ class FunctionCallResolver:
 
   def __init__(
       self,
-      llm_client: genai.Client,
       tools: list[Tool],
       instructions: str = "You are a helpful assistant.",
   ):
     """Initialization.
 
     Args:
-      llm_client: The LLM client.
       tools: The list of tools that a request can be resolved to.
       instructions: The instructions to guide the LLM.
     """
-    self._client = llm_client
+    self._tools = tools
+    self._instructions = instructions
+    self._client = None if vllm_enabled() else genai.Client()
     function_declarations = [
         types.FunctionDeclaration(
             name=tool.__name__, description=tool.__doc__
@@ -68,7 +69,7 @@ class FunctionCallResolver:
         ),
     )
 
-  def determine_tool_to_use(self, prompt: str) -> str:
+  async def determine_tool_to_use(self, prompt: str) -> str:
     """Determines which tool to use based on a user's prompt.
 
     Uses a LLM to analyze the user's prompt and decide which of the available
@@ -81,8 +82,32 @@ class FunctionCallResolver:
         The name of the tool function that the model has determined should be
         called. If no suitable tool is found, it returns "Unknown".
     """
-    response = self._client.models.generate_content(
-        model="gemini-3.1-flash-lite-preview",
+    if self._client is None:
+      async with vllm_client() as client:
+        completion = await client.chat.completions.create(
+            model=model_name(),
+            messages=[
+                {"role": "system", "content": self._instructions},
+                {"role": "user", "content": prompt},
+            ],
+            tools=[
+                {
+                    "type": "function",
+                    "function": {
+                        "name": tool.__name__,
+                        "description": tool.__doc__ or "",
+                        "parameters": {"type": "object", "properties": {}},
+                    },
+                }
+                for tool in self._tools
+            ],
+            tool_choice="required",
+        )
+      calls = completion.choices[0].message.tool_calls
+      return calls[0].function.name if calls else "Unknown"
+
+    response = await self._client.aio.models.generate_content(
+        model=model_name(),
         contents=prompt,
         config=self._config,
     )

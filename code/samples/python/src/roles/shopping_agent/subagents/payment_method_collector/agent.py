@@ -25,6 +25,7 @@ After selection, the agent gets a purchase token from the credentials
 provider, which is then sent to the merchant agent for payment.
 """
 
+from common.model_config import agent_model
 from common.retrying_llm_agent import RetryingLlmAgent
 from common.system_utils import DEBUG_MODE_INSTRUCTIONS
 
@@ -32,7 +33,7 @@ from . import tools
 
 
 payment_method_collector = RetryingLlmAgent(
-    model="gemini-3.1-flash-lite-preview",
+    model=agent_model(),
     name="payment_method_collector",
     max_retries=5,
     instruction="""

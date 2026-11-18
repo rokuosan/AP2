@@ -18,6 +18,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from common.model_config import agent_model
 from google.adk.agents import Agent
 from google.adk.tools.base_tool import BaseTool
 from google.adk.tools.mcp_tool import McpToolset
@@ -170,7 +171,7 @@ _CONSENT_INSTRUCTION = (_PROMPTS_DIR / "consent_agent.md").read_text()
 _MONITORING_INSTRUCTION = (_PROMPTS_DIR / "monitoring_agent.md").read_text()
 _PURCHASE_INSTRUCTION = (_PROMPTS_DIR / "purchase_agent.md").read_text()
 
-_model = os.environ.get("AGENT_MODEL", "gemini-3.1-flash-lite-preview")
+_model = agent_model()
 
 purchase_agent = Agent(
     name="purchase_agent",

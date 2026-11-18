@@ -22,6 +22,7 @@ The Google ADK powers this shopping agent, chosen for its simplicity and
 efficiency in developing robust LLM agents.
 """
 
+from common.model_config import agent_model
 from common.retrying_llm_agent import RetryingLlmAgent
 from common.system_utils import DEBUG_MODE_INSTRUCTIONS
 
@@ -35,7 +36,7 @@ from .subagents.shopper.agent import shopper
 
 root_agent = RetryingLlmAgent(
     max_retries=5,
-    model="gemini-3.1-flash-lite-preview",
+    model=agent_model(),
     name="root_agent",
     instruction="""
           You are a shopping agent responsible for helping users find and

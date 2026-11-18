@@ -25,9 +25,10 @@ from a2a.types import DataPart, Part, Task, TextPart
 from ap2.models.cart import CART_DATA_KEY, Cart
 from ap2.models.payment_request import PaymentItem
 from common import message_utils
+from common.model_config import model_name, vllm_client, vllm_enabled
 from common.system_utils import DEBUG_MODE_INSTRUCTIONS
 from google import genai
-from pydantic import ValidationError
+from pydantic import TypeAdapter, ValidationError
 
 from .. import storage
 
@@ -47,8 +48,6 @@ async def find_items_workflow(
     updater: The task updater to report status.
     current_task: The current task object.
   """
-  llm_client = genai.Client()
-
   catalog_search = message_utils.find_data_part("catalog_search", data_parts)
   if not catalog_search:
     error_message = updater.new_agent_message(
@@ -66,16 +65,36 @@ async def find_items_workflow(
     %s
         """ % DEBUG_MODE_INSTRUCTIONS
 
-  llm_response = llm_client.models.generate_content(
-      model="gemini-3.1-flash-lite-preview",
-      contents=prompt,
-      config={
-          "response_mime_type": "application/json",
-          "response_schema": list[PaymentItem],
-      },
-  )
   try:
-    items: list[PaymentItem] = llm_response.parsed
+    if vllm_enabled():
+      item_list = TypeAdapter(list[PaymentItem])
+      async with vllm_client() as client:
+        response = await client.chat.completions.create(
+            model=model_name(),
+            messages=[{"role": "user", "content": prompt}],
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "payment_items",
+                    "schema": item_list.json_schema(),
+                    "strict": True,
+                },
+            },
+        )
+      items = item_list.validate_json(
+          response.choices[0].message.content or ""
+      )
+    else:
+      async with genai.Client().aio as client:
+        response = await client.models.generate_content(
+            model=model_name(),
+            contents=prompt,
+            config={
+                "response_mime_type": "application/json",
+                "response_schema": list[PaymentItem],
+            },
+        )
+      items = response.parsed
 
     for i, item in enumerate(items):
       cart = Cart(
