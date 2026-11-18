@@ -1,5 +1,5 @@
 site_name: AP2 - Agent Payments Protocol Documentation
-site_url: https://ap2-protocol.org/
+site_url: https://rokuosan.github.io/AP2/
 site_description: >
   The Agent Payments Protocol (AP2) is a solution for enabling gen AI agents to make payments on
   behalf of users, safely, securely, and in a decentralized and privacy protecting manner.
@@ -8,11 +8,6 @@ site_description: >
 site_author: Google
 site_dir: site
 edit_uri: edit/main/docs/
-
-extra:
-  analytics:
-    provider: google
-    property: G-KXMYBJWNQ7
 
 # Navigation
 nav:
@@ -37,7 +32,7 @@ nav:
 
 # Repository
 repo_name: AP2
-repo_url: https://github.com/google-agentic-commerce/AP2
+repo_url: https://github.com/rokuosan/AP2
 
 # Copyright
 copyright: Copyright 2025 Google. Licensed under the Apache License, Version 2.0.
