@@ -4,9 +4,9 @@ hide:
 ---
 
 <!-- markdownlint-disable MD041 -->
-<div style="text-align: center;">
-  <div class="centered-logo-text-group">
-    <img src="assets/ap2-logo-black.svg" alt="Agent Payments Protocol Logo" width="100">
+<div style="text-align: center;" markdown="1">
+  <div class="centered-logo-text-group" markdown="span">
+    ![Agent Payments Protocol Logo](assets/ap2-logo-black.svg){ width="100" }
     <h1>Agent Payments Protocol (AP2)</h1>
   </div>
 </div>

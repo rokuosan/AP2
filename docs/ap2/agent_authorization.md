@@ -20,13 +20,13 @@ The authorization process is broken into two steps:
     Agent does so by presenting a relevant Mandate to the Verifier. Upon
     completion, the Verifier returns the Agent a Receipt.
 
-<div style="display: flex; justify-content: space-around;">
-  <figure>
-    <img src="../../assets/mandate_delegation_overview.svg" style="width:100%" alt="Diagram illustrating the Mandate Delegation process">
+<div style="display: flex; justify-content: space-around;" markdown="1">
+  <figure markdown="span">
+    ![Diagram illustrating the Mandate Delegation process](../assets/mandate_delegation_overview.svg){ style="width:100%" }
     <figcaption align="center">Mandate Delegation</figcaption>
   </figure>
-  <figure>
-    <img src="../../assets/action_authorization_overview.svg" style="width:100%" alt="Diagram illustrating the Action Authorization process">
+  <figure markdown="span">
+    ![Diagram illustrating the Action Authorization process](../assets/action_authorization_overview.svg){ style="width:100%" }
     <figcaption align="center">Action Authorization</figcaption>
   </figure>
 </div>
@@ -78,8 +78,8 @@ In this model, the Issuer of the User Credential is being trusted by the Verifie
 to ensure that the Trusted Surface constructs Mandates only after obtaining
 appropriate user consent and authorization.
 
-<figure>
-  <img src="../../assets/mandate_delegation_user_credential.svg" style="width:100%" alt="Mandate Delegation: User Credential">
+<figure markdown="span">
+  ![Mandate Delegation: User Credential](../assets/mandate_delegation_user_credential.svg){ style="width:100%" }
   <figcaption align="center">Mandate Delegation: User Credential</figcaption>
 </figure>
 
@@ -293,8 +293,8 @@ construct Mandates only after obtaining appropriate user consent and
 authorization. This model does not require a pre-issued credential. The
 following steps occur:
 
-<figure>
-  <img src="../../assets/mandate_delegation_trusted_agent_provider.svg" style="width:100%" alt="Mandate Delegation: Trusted Agent Provider">
+<figure markdown="span">
+  ![Mandate Delegation: Trusted Agent Provider](../assets/mandate_delegation_trusted_agent_provider.svg){ style="width:100%" }
   <figcaption align="center">Mandate Delegation: Trusted Agent Provider</figcaption>
 </figure>
 
@@ -401,8 +401,8 @@ Mandates can be thought of being in two states:
 Open Mandates are necessary to allow the Agent to perform autonomous actions on
 the User’s behalf, while still appropriately constraining their behavior.
 
-<figure>
-  <img src="../../assets/mandate_chain_example.svg" style="width:800px" alt="Examples of open and closed Mandate Chains">
+<figure markdown="span">
+  ![Examples of open and closed Mandate Chains](../assets/mandate_chain_example.svg){ style="width:800px" }
   <figcaption align="center">Example: Mandate Chains</figcaption>
 </figure>
 

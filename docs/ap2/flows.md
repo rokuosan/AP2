@@ -20,8 +20,8 @@ enrollment and any necessary User Credentials have been set up in advance.
 This is the `direct` flow where the User is present to directly approve the
 closed Payment and Checkout Mandates.
 
-<figure>
-  <img src="../../assets/ap2_hp_flow.svg" style="width:800px" alt="Diagram showing the overall Human Present flow in AP2">
+<figure markdown="span">
+  ![Diagram showing the overall Human Present flow in AP2](../assets/ap2_hp_flow.svg){ style="width:800px" }
   <figcaption align="center">Human Present flow</figcaption>
 </figure>
 
@@ -29,8 +29,8 @@ There are two phases to this flow:
 
 **Phase 1: Shopping**
 
-<figure>
-  <img src="../../assets/ap2_hp_shopping.svg" style="width:800px" alt="Human Present Shopping flow">
+<figure markdown="span">
+  ![Human Present Shopping flow](../assets/ap2_hp_shopping.svg){ style="width:800px" }
   <figcaption align="center">Human Present Shopping flow</figcaption>
 </figure>
 
@@ -43,8 +43,8 @@ There are two phases to this flow:
 
 **Phase 2: Payment**
 
-<figure>
-  <img src="../../assets/ap2_hp_payment.svg" style="width:800px" alt="Human Present Payment flow">
+<figure markdown="span">
+  ![Human Present Payment flow](../assets/ap2_hp_payment.svg){ style="width:800px" }
   <figcaption align="center">Human Present Payment flow</figcaption>
 </figure>
 
@@ -78,8 +78,8 @@ There are two phases to this flow:
 
 ## Human Not Present
 
-<figure>
-  <img src="../../assets/ap2_hnp_flow.svg" style="width:800px" alt="Human Not Present flow">
+<figure markdown="span">
+  ![Human Not Present flow](../assets/ap2_hnp_flow.svg){ style="width:800px" }
   <figcaption align="center">Human Not Present flow</figcaption>
 </figure>
 
@@ -89,8 +89,8 @@ In the Human Not Present flow, the Shopping phase is split in two. In the first
 phase, the User sets a shopping task for the Agent. In the second phase, the
 Agent acts autonomously to complete the task without further human interaction.
 
-<figure>
-  <img src="../../assets/ap2_hnp_shopping.svg" style="width:800px" alt="Human Not Present Shopping flow">
+<figure markdown="span">
+  ![Human Not Present Shopping flow](../assets/ap2_hnp_shopping.svg){ style="width:800px" }
   <figcaption align="center">Human Not Present Shopping flow</figcaption>
 </figure>
 
@@ -131,8 +131,8 @@ the assigned task.
 
 In this phase, the Agent completes the checkout using the provided Mandates.
 
-<figure>
-  <img src="../../assets/ap2_hnp_payment.svg" style="width:800px" alt="Human Not Present Payment flow">
+<figure markdown="span">
+  ![Human Not Present Payment flow](../assets/ap2_hnp_payment.svg){ style="width:800px" }
   <figcaption align="center">Human Not Present Payment flow</figcaption>
 </figure>
 

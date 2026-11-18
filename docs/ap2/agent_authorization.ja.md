@@ -9,13 +9,13 @@
 - **Mandate の委任**：ユーザーが Trusted Surface 上で Mandate の内容を承認し、作成された Mandate をエージェントに委任します。
 - **アクションの認可**：検証者は、ユーザーに代わって操作する権限の証明をエージェントに求めます。エージェントは該当する Mandate を提示し、処理後に検証者から Receipt を受け取ります。
 
-<div style="display: flex; justify-content: space-around;">
-  <figure>
-    <img src="../../assets/mandate_delegation_overview.svg" style="width:100%" alt="Mandate 委任の概要図">
+<div style="display: flex; justify-content: space-around;" markdown="1">
+  <figure markdown="span">
+    ![Mandate 委任の概要図](../assets/mandate_delegation_overview.svg){ style="width:100%" }
     <figcaption align="center">Mandate の委任</figcaption>
   </figure>
-  <figure>
-    <img src="../../assets/action_authorization_overview.svg" style="width:100%" alt="アクション認可の概要図">
+  <figure markdown="span">
+    ![アクション認可の概要図](../assets/action_authorization_overview.svg){ style="width:100%" }
     <figcaption align="center">アクションの認可</figcaption>
   </figure>
 </div>
@@ -41,8 +41,8 @@ Trusted Agent Provider 方式では、検証者が Agent Provider を信頼し�
 
 この方式には、User Credential の発行者、資格情報を保持する Trusted Surface、エージェントの3者が関わります。検証者は発行者を信頼し、適切なユーザーの同意と認可を得た後でのみ Trusted Surface が Mandate を作成することを保証します。
 
-<figure>
-  <img src="../../assets/mandate_delegation_user_credential.svg" style="width:100%" alt="User Credential を使う Mandate 委任">
+<figure markdown="span">
+  ![User Credential を使う Mandate 委任](../assets/mandate_delegation_user_credential.svg){ style="width:100%" }
   <figcaption align="center">User Credential による Mandate 委任</figcaption>
 </figure>
 
@@ -83,8 +83,8 @@ Authorization Response の例には、ユーザー署名付き Checkout Mandate 
 
 この方式では検証者が Agent Provider を直接信頼し、適切なユーザーの同意と認可を得た後でのみ Agent Provider が Mandate を作成することを保証します。事前に発行された資格情報は必要ありません。
 
-<figure>
-  <img src="../../assets/mandate_delegation_trusted_agent_provider.svg" style="width:100%" alt="Trusted Agent Provider による Mandate 委任">
+<figure markdown="span">
+  ![Trusted Agent Provider による Mandate 委任](../assets/mandate_delegation_trusted_agent_provider.svg){ style="width:100%" }
   <figcaption align="center">Trusted Agent Provider による Mandate 委任</figcaption>
 </figure>
 
@@ -107,8 +107,8 @@ Mandate には2つの状態があります。
 
 オープンな Mandate を使うことで、ユーザーが不在の間もエージェントは自律的に操作できます。同時に、その動作を適切な範囲に制限できます。
 
-<figure>
-  <img src="../../assets/mandate_chain_example.svg" style="width:800px" alt="オープンとクローズドな Mandate の連鎖例">
+<figure markdown="span">
+  ![オープンとクローズドな Mandate の連鎖例](../assets/mandate_chain_example.svg){ style="width:800px" }
   <figcaption align="center">Mandate の連鎖例</figcaption>
 </figure>
 

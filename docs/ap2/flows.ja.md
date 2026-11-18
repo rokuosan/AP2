@@ -13,8 +13,8 @@ AP2 のフローは「人が参加する場合」と「人が参加しない場�
 
 これは `direct` フローです。ユーザーがその場でクローズドな Payment Mandate と Checkout Mandate を承認します。
 
-<figure>
-  <img src="../../assets/ap2_hp_flow.svg" style="width:800px" alt="AP2 の人が参加するフロー全体図">
+<figure markdown="span">
+  ![AP2 の人が参加するフロー全体図](../assets/ap2_hp_flow.svg){ style="width:800px" }
   <figcaption align="center">人が参加するフロー</figcaption>
 </figure>
 
@@ -22,8 +22,8 @@ AP2 のフローは「人が参加する場合」と「人が参加しない場�
 
 **フェーズ1：買い物**
 
-<figure>
-  <img src="../../assets/ap2_hp_shopping.svg" style="width:800px" alt="人が参加する買い物フロー">
+<figure markdown="span">
+  ![人が参加する買い物フロー](../assets/ap2_hp_shopping.svg){ style="width:800px" }
   <figcaption align="center">人が参加する買い物フロー</figcaption>
 </figure>
 
@@ -34,8 +34,8 @@ AP2 のフローは「人が参加する場合」と「人が参加しない場�
 
 **フェーズ2：支払い**
 
-<figure>
-  <img src="../../assets/ap2_hp_payment.svg" style="width:800px" alt="人が参加する支払いフロー">
+<figure markdown="span">
+  ![人が参加する支払いフロー](../assets/ap2_hp_payment.svg){ style="width:800px" }
   <figcaption align="center">人が参加する支払いフロー</figcaption>
 </figure>
 
@@ -55,8 +55,8 @@ AP2 のフローは「人が参加する場合」と「人が参加しない場�
 
 ## 人が参加しない場合
 
-<figure>
-  <img src="../../assets/ap2_hnp_flow.svg" style="width:800px" alt="人が参加しないフロー">
+<figure markdown="span">
+  ![人が参加しないフロー](../assets/ap2_hnp_flow.svg){ style="width:800px" }
   <figcaption align="center">人が参加しないフロー</figcaption>
 </figure>
 
@@ -64,8 +64,8 @@ AP2 のフローは「人が参加する場合」と「人が参加しない場�
 
 このフローの買い物段階は2つに分かれます。最初にユーザーが Shopping Agent に買い物のタスクを設定し、次にエージェントがユーザーの介入なしでタスクを実行します。
 
-<figure>
-  <img src="../../assets/ap2_hnp_shopping.svg" style="width:800px" alt="人が参加しない買い物フロー">
+<figure markdown="span">
+  ![人が参加しない買い物フロー](../assets/ap2_hnp_shopping.svg){ style="width:800px" }
   <figcaption align="center">人が参加しない買い物フロー</figcaption>
 </figure>
 
@@ -95,8 +95,8 @@ AP2 のフローは「人が参加する場合」と「人が参加しない場�
 
 エージェントはユーザーが事前に許可した Mandate を使ってチェックアウトを完了します。
 
-<figure>
-  <img src="../../assets/ap2_hnp_payment.svg" style="width:800px" alt="人が参加しない支払いフロー">
+<figure markdown="span">
+  ![人が参加しない支払いフロー](../assets/ap2_hnp_payment.svg){ style="width:800px" }
   <figcaption align="center">人が参加しない支払いフロー</figcaption>
 </figure>
 
