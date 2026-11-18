@@ -16,4 +16,7 @@ ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \
     TEMP_DB_DIR=/state \
     AGENT_PROVIDER_PUBLIC_KEY_PATH=/state/agent_provider_signing_key.pub
+RUN mkdir /app/.logs \
+    && chown -R 65532:65532 /app/.logs \
+       /app/.venv/lib/python3.13/site-packages/google/adk/cli/browser/assets/config
 USER 65532:65532

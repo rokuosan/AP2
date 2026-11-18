@@ -18,7 +18,7 @@ Returns Cart objects for browsing. The checkout JWT is created later
 when the user selects a cart (via the ``create_checkout`` tool).
 """
 
-from typing import Any
+from typing import Annotated, Any
 
 from a2a.server.tasks.task_updater import TaskUpdater
 from a2a.types import DataPart, Part, Task, TextPart
@@ -28,7 +28,7 @@ from common import message_utils
 from common.model_config import model_name, vllm_client, vllm_enabled
 from common.system_utils import DEBUG_MODE_INSTRUCTIONS
 from google import genai
-from pydantic import TypeAdapter, ValidationError
+from pydantic import Field, TypeAdapter, ValidationError
 
 from .. import storage
 
@@ -67,7 +67,9 @@ async def find_items_workflow(
 
   try:
     if vllm_enabled():
-      item_list = TypeAdapter(list[PaymentItem])
+      item_list = TypeAdapter(
+          Annotated[list[PaymentItem], Field(min_length=3, max_length=3)]
+      )
       async with vllm_client() as client:
         response = await client.chat.completions.create(
             model=model_name(),
