@@ -1,0 +1,10 @@
+**
+!README.md
+!pyproject.toml
+!code/sdk/python/**
+!code/samples/python/README.md
+!code/samples/python/pyproject.toml
+!code/samples/python/src/**
+!code/samples/certs/**
+**/__pycache__
+**/.env
