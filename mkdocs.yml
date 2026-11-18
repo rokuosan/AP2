@@ -83,8 +83,6 @@ theme:
     - content.tabs.link
     - navigation.footer
     - navigation.indexes
-    - navigation.instant
-    - navigation.instant.progress
     - navigation.path
     - navigation.top
     - navigation.tracking
@@ -126,9 +124,34 @@ markdown_extensions:
   - toc:
       permalink: true
 
+hooks:
+  - hooks/llmstxt.py
+
 # Plugins
 plugins:
   - search
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: ja
+          name: 日本語
+          build: true
+          nav_translations:
+            Home: ホーム
+            Executive Summary: 概要
+            Specification: 仕様
+            Agent Authorization Framework: エージェント認可フレームワーク
+            Flows: フロー
+            Security and Privacy Considerations: セキュリティとプライバシーに関する考慮事項
+            Implementation Considerations: 実装上の考慮事項
+            Glossary: 用語集
+            FAQ: よくある質問
+            Samples: サンプル
   - macros:
       module_name: docs/create_table
   - llmstxt:

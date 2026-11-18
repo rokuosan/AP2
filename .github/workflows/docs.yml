@@ -8,6 +8,7 @@ on:
       - ".github/workflows/docs.yml"
       - "requirements-docs.txt"
       - "mkdocs.yml"
+      - "hooks/**"
       - "docs/**"
   pull_request:
     branches:
@@ -16,6 +17,7 @@ on:
       - ".github/workflows/docs.yml"
       - "requirements-docs.txt"
       - "mkdocs.yml"
+      - "hooks/**"
       - "docs/**"
 
 jobs:
