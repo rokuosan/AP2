@@ -859,199 +859,145 @@
     
       
     
-    <a href="https://github.com/rokuosan/AP2/raw/main/docs/faq.md" title="このページの原文を表示" class="md-content__button md-icon">
+    <a href="https://github.com/rokuosan/AP2/raw/main/docs/faq.ja.md" title="このページの原文を表示" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.22 2H7.78C6.8 2 6 2.8 6 3.78v12.44C6 17.2 6.8 18 7.78 18h12.44c.98 0 1.78-.79 1.78-1.78V3.78C22 2.8 21.2 2 20.22 2m-9.16 13H9v-2.06l6.06-6.06 2.06 2.06zm7.64-7.65-1 1-2.05-2.05 1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M4 6H2v14a2 2 0 0 0 2 2h14v-2H4z"/></svg>
     </a>
   
 
 
-<h1 id="frequently-asked-questions">Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h1>
+<h1 id="frequently-asked-questions">よくある質問<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h1>
 <ol>
 <li>
-<p>What can I do with this protocol today?</p>
+<p>現在、このプロトコルで何ができますか？</p>
 <ul>
-<li>We built sample agents around the core AP2 python library that demonstrate
-  a rich shopping experience. Launch the agents, and try shopping for your
-  favorite products! These samples mock actual payment service providers so
-  you can explore with no dependencies. Specifically, watch for the mandates
-  as the agents do their thing. We will be publishing more samples and SDKs
-  soon, and we'd love to see your ideas! You can use the code samples to
-  create your own implementation of a payment taking place between multiple
-  AI Agents or extend the protocol to show new kinds of payment scenarios
-  <em>(e.g., showing a payment made by a different payment method or using a
-  different way of authentication)</em>. </li>
+<li>AP2 のコアとなる Python ライブラリを使ったサンプルエージェントで、さまざまな買い物の流れを試せます。
+  エージェントを起動し、好きな商品を探してみてください。
+  サンプルは実際の決済サービス事業者を模擬するため、外部サービスに依存せずに試せます。
+  エージェントの処理中に Mandate がどのように使われるかを確認してください。
+  今後もサンプルや SDK を公開する予定です。アイデアも歓迎します。
+  サンプルコードを使って、複数の AI エージェント間の支払いを実装したり、プロトコルを拡張して新しい決済シナリオを試したりできます。
+  たとえば、支払い方法や認証方法を変更できます。</li>
 </ul>
 </li>
 <li>
-<p>Can I build my own agent for any of these roles, taking one of these as a
-   template?</p>
+<p>サンプルをひな型にして、各役割のエージェントを自作できますか？</p>
 <ul>
-<li>Yes you can build your own agent using any of the
-  <a href="../ap2/implementation_considerations/">roles</a>. Get started building with
-  <a href="https://google.github.io/adk-docs/">ADK</a> and
-  <a href="https://cloud.google.com/products/agent-builder">Agent Builder</a> from
-  Google Cloud, or any other platform you choose to build agents.</li>
+<li>はい。<a href="../ap2/implementation_considerations/">定義済みの役割</a>のどれでも実装できます。
+  Google Cloud の <a href="https://google.github.io/adk-docs/">ADK</a> や <a href="https://cloud.google.com/products/agent-builder">Agent Builder</a> のほか、任意のエージェント開発プラットフォームを使えます。</li>
 </ul>
 </li>
 <li>
-<p>Can I build my own agent to participate in this protocol?</p>
+<p>自作のエージェントをこのプロトコルに参加させられますか？</p>
 <ul>
-<li>Yes, you can build an agent for any of the defined
-  <a href="../ap2/implementation_considerations/">roles</a>. Any agent, on any framework
-  (like LangGraph, AG2 or CrewAI), or on any runtime, is capable of
-  implementing AP2.</li>
+<li>はい。<a href="../ap2/implementation_considerations/">定義済みの役割</a>のどれでも、自作のエージェントで担えます。
+  LangGraph、AG2、CrewAI などのフレームワークや、ランタイムの種類にかかわらず、AP2 を実装できます。</li>
 </ul>
 </li>
 <li>
-<p>Can I try this out without actually making a payment?</p>
+<p>実際に支払わずに試せますか？</p>
 <ul>
-<li>You can consider setting this up in your internal environments where you
-  may already have ways to invoke fake payment methods which do not require
-  real money movement.</li>
+<li>実際の資金移動を伴わない模擬の支払い方法を利用できる社内環境があれば、その環境で試せます。</li>
 </ul>
 </li>
 <li>
-<p>Is there a MCP server or a SDK which is ready for "my framework of choice"?</p>
+<p>利用したいフレームワークに対応する MCP サーバーや SDK はありますか？</p>
 <ul>
-<li>We are working on an SDK and a MCP server right now, in collaboration with
-  payment service providers. Check back soon.</li>
+<li>現在、決済サービス事業者と協力して SDK と MCP サーバーを開発しています。
+  最新情報は今後の更新をご確認ください。</li>
 </ul>
 </li>
 <li>
-<p>Does this work with x402 standard for crypto payments?</p>
+<p>暗号資産決済の x402 標準に対応していますか？</p>
 <ul>
-<li>
-<p>We designed AP2 to be a payment-agnostic protocol, so that agentic
-  commerce can securely take place across all types of payment systems. It
-  provides a secure, auditable foundation whether an agent is using a credit
-  card or transacting with stablecoins. This flexible design allows us to
-  extend its core principles to new ecosystems, ensuring a consistent
-  standard for trust everywhere.</p>
-<p>As a first step, check out
-<a href="https://github.com/google-agentic-
-commerce/a2a-x402/">google-agentic-commerce/a2a-x402</a>
-which is an implementation of A2A in conjunction with the x402 standard.
-We will be aligning this closely with AP2 over time to make it easy to
-compose solutions which include all payment methods, including
-stablecoins.</p>
+<li>AP2 は特定の支払い方法に依存しないよう設計されており、さまざまな決済システムで安全にエージェントコマースを実現できます。
+  エージェントがクレジットカードを使う場合も、ステーブルコインで取引する場合も、安全で監査可能な仕組みを提供します。
+  この設計により、新しいエコシステムにも同じ原則を適用し、取引の信頼性を共通の基準で確保できます。</li>
+</ul>
+<p>最初の例として、A2A と x402 を組み合わせた実装 <a href="https://github.com/google-agentic-commerce/a2a-x402/">google-agentic-commerce/a2a-x402</a> を参照してください。
+  今後はこの実装と AP2 の整合性を高め、ステーブルコインを含むさまざまな支払い方法を組み合わせた解決策を構築しやすくします。</p>
 </li>
+<li>
+<p>Verifiable Credential（検証可能な資格情報）とは何ですか？</p>
+<ul>
+<li>Checkout Mandate や Payment Mandate のように、暗号技術で保護された標準化済みのデータオブジェクトです。
+  取引を構成する要素として暗号学的に署名され、改ざんを検知でき、署名者による後からの否認を防ぎます。</li>
 </ul>
 </li>
 <li>
-<p>What are verifiable credentials?</p>
+<p>プロトコルはユーザーの主導権とプライバシーをどう確保しますか？</p>
 <ul>
-<li>These are standardized, cryptographically secure data objects (like the
-  Checkout Mandate and Payment Mandate) that serve as tamper-evident,
-  non-disputable, and cryptographically signed building blocks for a
-  transaction.</li>
+<li>最終的な決定権は常にユーザーにあり、ユーザーは自分のエージェントの行動を細かく制御できます。
+  ペイロードの暗号化と選択的開示で開示データを最小限に抑え、Shopping Agent が機密性の高い PCI データや個人を特定できる情報（PII）にアクセスできないようにします。
+  これにより、会話で入力したプロンプトや個人の支払い情報などを保護します。</li>
 </ul>
 </li>
 <li>
-<p>How does the protocol ensure user control and privacy?</p>
+<p>AP2 は取引の責任の所在をどのように明確にしますか？</p>
 <ul>
-<li>The protocol is designed to ensure the user is always the ultimate
-  authority and has granular control over their agents' activities. It
-  protects sensitive user information, such as conversational prompts and
-  personal payment details, by preventing shopping agents from accessing
-  sensitive PCI or PII data through payload encryption and selective 
-  disclosure to ensure data minimization.</li>
+<li>AP2 の主な目的の一つは、決済ネットワークが責任の所在や損失負担の原則を定める際に使える証拠を提供することです。
+  紛争が起きた場合、カードネットワークなどの裁定者は、ユーザーが署名した Checkout Mandate でエージェントと消費者の取り決めを確認し、争点となっている取引の詳細と照合できます。
+  この照合は、取引の責任の所在を判断する材料になります。</li>
 </ul>
 </li>
 <li>
-<p>How does AP2 address transaction accountability?</p>
+<p>エージェントのハルシネーションによる誤購入をどう防ぎますか？</p>
 <ul>
-<li>A primary objective is to provide supporting evidence that helps payment
-  networks establish accountability and liability principles. In a dispute,
-  the network adjudicator (e.g., Card Network) can use the user-signed
-  Checkout Mandate and compare the details of what was agreed upon between
-the
-  agent and the consumer against the details in the dispute to help
-  determine transaction accountability.</li>
+<li>AP2 は、取引の根拠として、関係するすべての当事者から、検証可能で否認できない確定的な意思の証明を求めます。
+  たとえば、ユーザーが署名した Checkout Mandate がこれに当たります。
+  言語モデルの確率的で曖昧な出力から意思を推定する場合に生じる誤購入のリスクに対処できます。</li>
 </ul>
 </li>
 <li>
-<p>What prevents an agent from "hallucinating" and making an incorrect purchase?</p>
+<p>なぜ当初から暗号資産と Web3 に対応したのですか？</p>
 <ul>
-<li>The principle of Verifiable Intent, Not Inferred Action addresses this
-  risk. Transactions must be anchored to deterministic, non-repudiable proof
-  of intent from all parties, such as the user-signed Checkout Mandate,
-rather than relying only on interpreting the probabilistic and
-  ambiguous outputs of a language model.</li>
+<li>デジタル決済を含む幅広い支払い方法に対応することで、今後登場する決済方法にも適応できるようにしています。
+  Coinbase、Ethereum Foundation、MetaMask などのパートナーとの協業は AP2 の柔軟性を実証し、従来の経済圏と Web3 の経済圏をつなぐことで、マイクロペイメントなどの新しい用途を可能にします。</li>
 </ul>
 </li>
 <li>
-<p>Why was crypto and Web3 support included from day one?</p>
+<p>プロジェクトに参加するにはどうすればよいですか？</p>
 <ul>
-<li>Supporting a broad range of payment types, including digital payment
-  methods ensures the protocol is future-proof. Collaboration with partners
-  like Coinbase, Ethereum Foundation, and Metamask validates AP2's
-  flexibility and bridges the gap between the traditional and Web3
-  economies, enabling novel use cases like micropayments.</li>
+<li>AP2 は、A2A プロトコルと同様に Google が立ち上げたオープンソースプロジェクトです。
+  GitHub での議論、不具合報告、機能要望、プルリクエストを歓迎します。
+  新しいサンプル、連携機能、SDK を共同で開発しており、AP2 チームへの連絡には GitHub が適しています。</li>
 </ul>
 </li>
 <li>
-<p>How can I get involved?</p>
-<ul>
-<li>AP2 is an open source project created by Google, similar to the A2A
-  protocol. Contributions are welcome on Github as discussions, bugs,
-  feature requests, and PRs. Collaboration is happening right now, with new
-  samples, integrations and SDKs being developed – Github is the best way to
-communicate with the AP2 team.</li>
-</ul>
-</li>
-<li>
-<p>How is UCP different from AP2? And how does it relate to your agentic
-checkout feature?</p>
+<p>UCP と AP2 はどう違いますか？ エージェントによるチェックアウト機能とはどう関係しますか？</p>
 <ul>
 <li>
-<p>AP2: Agent Payments Protocol (AP2) is designed to provide a common
-  language for agents to transact with security and accountability. While
-  the Universal Commerce Protocol orchestrates the broader purchase
-  lifecycle, AP2 is the specialized payment layer responsible for
-  authorizing and signing transactions. AP2 becomes critical in the flow
-  when, in the near future, the transactions become truly agentic and users
-  delegate purchases to their AI Agents. This modular design fosters trust
-  among buyers, merchants, and providers while retaining flexibility.
-  Merchants will be able to integrate AP2 as an extension within the
-  Universal Commerce Protocol for transactions which are driven by AI
-  Agents.</p>
+<p><strong>AP2</strong>：エージェントが安全に取引し、責任の所在を明確にするための共通プロトコルです。
+  Universal Commerce Protocol が購入プロセス全体を調整し、AP2 は取引の認可と署名に特化した決済レイヤーを提供します。
+  今後、ユーザーが AI エージェントに購入を委任し、エージェントが取引を進めるようになると、このフローで AP2 が重要になります。
+  このモジュール構成により、柔軟性を保ちつつ、購入者、販売者、サービス事業者の間で取引の信頼性を確保できます。
+  販売者は、AI エージェントが主導する取引向けに、UCP の拡張として AP2 を組み込めるようになります。</p>
 </li>
 <li>
-<p>Agentic checkout: Our agentic checkout feature buys things on your behalf
-  directly on a store's website at your direction. The Universal Commerce
-  Protocol is different in that it enables native buying on AI Mode and
-  Gemini. Users are connected directly with the merchant when they natively
-  buy on AI Mode and Gemini, which unlocks additional features such as
-  important post-purchase signals, like order status updates. Soon-to-be
-  available benefits include using loyalty points, and shopping from a
-  previous cart.</p>
+<p><strong>エージェントによるチェックアウト（agentic checkout）</strong>：この機能は、ユーザーの指示に従って店舗のウェブサイトで購入を代行します。
+  UCP を利用すると、ユーザーは AI Mode や Gemini 上で直接購入できます。
+  これらの画面上で購入すると、ユーザーはいずれの場合も販売者と直接つながり、注文状況の通知など、購入後に必要な情報を受け取れます。
+  ポイントの利用や、過去のカートからの購入にも今後対応する予定です。</p>
 </li>
 </ul>
 </li>
 <li>
-<p>How do I know when to use AP2?</p>
+<p>どのような場合に AP2 を使えばよいですか？</p>
 <ul>
 <li>
-<p>If you are a merchant who would like to showcase products and allow users
-to complete inline checkout on Google’s AI surfaces like AI Mode and Gemini,
-then you should use Universal Commerce Protocol. You can enhance the
-protocol with the AP2 extension if you plan to build autonomous purchase
-scenarios where AI Agents can make purchases in the user’s absence.</p>
+<p>販売者が AI Mode や Gemini などの Google の AI インターフェースで商品を紹介し、その場でチェックアウトを完了できるようにする場合は、Universal Commerce Protocol を使用します。
+  ユーザーの不在時に AI エージェントが自律的に購入するシナリオでは、AP2 を拡張として追加できます。</p>
 </li>
 <li>
-<p>Outside of Google’s discovery surfaces, if you would like to enable a
-payments flow between two AI Agents or you want to add verifiable
-credentials to payment flows between your discovery surface and an AI Agent
-then you can continue to leverage AP2.</p>
+<p>Google の商品検索インターフェース以外で、AI エージェント同士の支払いフローを実装したい場合や、自社の商品検索インターフェースと AI エージェント間の支払いフローに Verifiable Credential を組み込みたい場合も、AP2 を利用できます。</p>
 </li>
 </ul>
 </li>
 <li>
-<p>What’s next for AP2?</p>
+<p>AP2 の今後の予定は何ですか？</p>
 <ul>
-<li>The core specification work will continue in <a href="https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/">FIDO</a>, ensuring it continues as an open, interoperable protocol for all agentic payments.</li>
-<li>The code samples and SDK will continue to be enhanced, remaining a state-of-the-art implementation of the AP2 specification.</li>
+<li>コア仕様の策定は <a href="https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/">FIDO</a> で継続し、エージェントが関与するあらゆる支払いに使える、オープンで相互運用可能なプロトコルとして発展させます。</li>
+<li>サンプルコードと SDK も引き続き改善し、AP2 仕様の最新技術を取り入れた実装を提供します。</li>
 </ul>
 </li>
 </ol>
