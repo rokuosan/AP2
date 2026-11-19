@@ -49,155 +49,31 @@ Trusted Agent Provider 方式では、検証者が Agent Provider を信頼し�
   <figcaption align="center">User Credential による Mandate 委任</figcaption>
 </figure>
 
-このフローの前に、発行者は Holder に User Credential を発行します。発行方法はこの文書の対象外です。標準的な方法の一例として [OpenID4VCI]() があります。
+このフローの前に、発行者は Holder に User Credential を発行します。発行方法はこの文書の対象外です。標準的な方法の一例として [OpenID4VCI](#references) があります。
 
 この方式では、ユーザーの VDC を提示する処理の一部として Mandate を作成し、委任します。
 
-> 注：この文書では SD-JWT VC と OpenID4VP を指定していますが、[ISO mDocs（ISO 18013-5）]()などの VDC 形式や [18013-7 Annex C]() などのプロトコルも同じ役割を担えます。
+> 注：この文書では SD-JWT VC と OpenID4VP を指定していますが、[ISO mDocs（ISO 18013-5）](#references) などの VDC 形式や [18013-7 Annex C](#references) などのプロトコルも同じ役割を担えます。
 
 #### OpenID4VP による委任
 
-[OpenID4VP]() は、Holder が Verifier に VDC を提示する標準プロトコルです。`transaction_data` 機能を使うと、デジタル資格情報の Holder が追加情報を承認し、署名できます。
+[OpenID4VP](#references) は、Holder が Verifier に VDC を提示する標準プロトコルです。`transaction_data` 機能を使うと、デジタル資格情報の Holder が追加情報を承認し、署名できます。
 
-OpenID4VP で User Credential を委任するには、エージェントが Authorization Request を作成します。`transaction_data` 配列には、base64url エンコードした JSON オブジェクトを含めます。Mandate 委任オブジェクトには、エンコード前に次のプロパティを含めなければなりません。
+OpenID4VP で User Credential を使って Mandate を委任するには、エージェントが Authorization Request を作成します。`transaction_data` 配列には、base64url エンコードした JSON オブジェクトを含めます。Mandate 委任オブジェクトには、エンコード前に次のプロパティを含めなければなりません。
 
 - **type**：必須です。値は文字列 `delegate` です。
 - **format**：必須です。返却する Mandate の VDC 形式です。
 - **delegate_payload**：必須です。Mandate の内容を表す JSON オブジェクトの配列です。
 - **delegate_disclosures**：任意です。`delegate_payload` 内の選択的開示情報を含む配列です。
 
-Authorization Response を作成する際は、`delegate_payload` を Key Binding に含めなければなりません。詳細は [Delegate SD-JWT]() を参照してください。
+Authorization Response を作成する際は、`delegate_payload` を Key Binding に含めなければなりません。詳細は [Delegate SD-JWT](#references) を参照してください。
 
 DCQL クエリで必要な User Credential を指定するなど、Authorization Request のほかのフィールドは通常どおり設定できます。
 
 利用できる場合は、セキュリティとユーザー体験を高めるため、OpenID4VP による委任に Digital Credentials API を使うことを推奨します。
 
-以下は Checkout Mandate と Payment Mandate を委任する OpenID4VP Authorization Request の規範的でない例です。読みやすさのため、base64url エンコード文字列を省略しています。
-
-以下の JSON 例、デコード例、資格情報および開示情報のデータ構造は仕様と同じため、フィールド名や値を変更せずに参照してください。
-
-`transaction_data` 配列には base64url エンコードされた2つの JSON オブジェクトが含まれます。インデックス0は、ユーザーが支払いを承認する前に表示する確認 UI の情報です。インデックス1は `delegate_payload` を通じて支払いを特定の Checkout と Payment Mandate に結び付けます。
-
-Authorization Response の例には、ユーザー署名付き Checkout Mandate と Payment Mandate が含まれます。`dpc_credential` は `~` 区切りの SD-JWT です。選択的開示では販売者が要求した3つのクレームだけを開示し、ほかのフィールドは `_sd` のハッシュに隠します。
-
-1つの Authorization Request 内で `delegate_payload` 配列に複数の要素を指定し、複数の Mandate を委任することもできます。
-
-### Trusted Agent Provider
-
-この方式では検証者が Agent Provider を直接信頼し、適切なユーザーの同意と認可を得た後でのみ Agent Provider が Mandate を作成することを保証します。事前に発行された資格情報は必要ありません。
-
-<figure markdown="span">
-  ![Trusted Agent Provider による Mandate 委任](../assets/mandate_delegation_trusted_agent_provider.svg){ style="width:100%" }
-  <figcaption align="center">Trusted Agent Provider による Mandate 委任</figcaption>
-</figure>
-
-- エージェントは Mandate の内容を作成し、Agent Provider が管理する Trusted Surface に渡します。たとえば、アプリケーション内の決定論的な別コンポーネントを使います。
-- Agent Provider の Trusted Surface は Mandate の内容をユーザーに表示し、必要な承認と同意を取得します。
-- Agent Provider は安全に保管された署名鍵で Mandate を作成します。たとえば Trusted Surface から Agent Provider のバックエンドに連絡して署名を依頼します。
-
-Agent Provider は、エージェントが Agent Provider の署名鍵にアクセスできず、Trusted Surface を経由しない限り鍵を使えないようにしなければなりません。リスクの詳細はセキュリティとプライバシーに関する考慮事項を参照してください。
-
-以下は Agent Provider が `sd-jwt-vc` ペイロードとして Checkout Mandate を作成する規範的でない例です。各例では、Mandate のペイロード、開示情報、フィールド名は仕様どおりに扱います。制約配列内の許可商品や販売者もハッシュで隠され、エージェントは制約に基づいて許可された商品と販売者だけを選択的に開示できます。
-
-## Mandate の構造
-
-Mandate は、ユーザーが承認した元の Mandate から、Verifier の操作を認可するクローズドな Mandate までを暗号学的に検証可能な連鎖として構成します。
-
-Mandate には2つの状態があります。
-
-- **クローズド**：Verifier との特定の取引に結び付いており、エージェントの操作を認可します。Agent はオープンな Mandate の `cnf` クレームで指定された鍵を使い、Key Binding JWT（Proof-of-Possession）を生成します。
-- **オープン**：まだ特定の取引に結び付いていません。クローズドな Mandate に記載できる内容の制約を持ち、その Mandate を使える特定の Agent に結び付いています。
-
-オープンな Mandate を使うことで、ユーザーが不在の間もエージェントは自律的に操作できます。同時に、その動作を適切な範囲に制限できます。
-
-<figure markdown="span">
-  ![オープンとクローズドな Mandate の連鎖例](../assets/mandate_chain_example.svg){ style="width:800px" }
-  <figcaption align="center">Mandate の連鎖例</figcaption>
-</figure>
-
-図は、同じ操作（A を使った doX）をユーザーが認可する2つの例を示します。「人が参加する」場合、ユーザーがクローズドな Mandate の内容に直接署名します。もう一方では、ユーザーがオープンな Mandate の内容に署名し、エージェントがユーザーに代わってクローズドな Mandate に署名します。認可を示すため、エージェントは Mandate の連鎖全体を提示します。
-
-オープンな Mandate は利用前に特定の取引に結び付ける必要があるため、暗号学的な Key Binding に対応しなければなりません。
-
-### SD-JWT VC を使う Mandate
-
-[SD-JWT]() は JSON を暗号学的に保護し、Mandate に役立つ機能を提供します。Key Binding によってユーザー不在時にエージェントが所有証明と取引への結び付きを示せます。また、選択的開示で制約のうち適用対象だけを開示し、ユーザーのプライバシーを守りながらエージェントに判断の柔軟性を持たせられます。
-
-> 注：この文書では SD-JWT VC を使いますが、ISO mDocs などの VDC も利用できます。
-
-SD-JWT の Mandate Content には次のクレームを含みます。
-
-- `vct`：必須です。資格情報の型に加えて Mandate の型を一意に識別する文字列です。
-- `constraints`：任意です。クローズドな Mandate に含められる内容を制約する、拡張可能なオブジェクトの配列です。各制約には一意な `type` が必須で、その他のプロパティは制約の型によって異なります。
-- `cnf`：任意です。RFC 7800 で定義される Proof-of-Possession 鍵の確認方法を含みます。Mandate がオープンな場合は必須です。
-
-Mandate の型に応じて、ほかのプロパティも含められます。オープンな Mandate は、対象型の必須フィールドをすべて持つ必要はありませんが、最終的なクローズドな Mandate には必須フィールドを含めなければなりません。SD-JWT VC の任意のクレームも利用できます。
-
-AP2 仕様では支払い用の Mandate 型と制約型を定めます。別の用途向けに新たな型を定義することもできます。名前の衝突を避けるため、定義主体が管理する rDNS プレフィックスや適切な URN など、衝突耐性のある命名方法を推奨します。
-
-#### 検証と処理の規則
-
-SD-JWT Mandate の連鎖は次の規則に従って検証し、処理します。
-
-1. [Delegate SD-JWT]() に従って SD-JWT の連鎖を検証し、処理します。
-2. オープンな Mandate の内容からクレームを抽出し、クローズドな Mandate の内容に同じ値が変更されずに含まれていることを確認します。
-3. オープンな Mandate の内容から各制約を抽出し、制約型に従ってクローズドな Mandate の内容と照合します。未知の制約は評価失敗として扱わなければなりません。
-
-## アクションの認可
-
-アクションの認可は Agent と Verifier の間で行います。購入の実行など、特定の操作に適切な認可があることを Agent に証明させる必要が生じたときに実施します。
-
-1. Verifier と Agent は、Verifier がユーザーによる認可の証明を求める段階までやり取りします。
-2. Verifier は操作の認可を示す Mandate の提示を要求します。
-3. Agent は適切な Mandate を選んで提示します。Mandate がオープンな場合、Mandate が認めた鍵を使って取引に結び付けます。
-4. Verifier は Mandate の完全性と、Mandate の内容が Agent の実行しようとする操作を許可していることを検証します。
-
-選択的開示がある場合、Agent は認可を示すために必要な情報を提示しつつ、ユーザーのプライバシーを最大限に守れる開示内容を選ばなければなりません。適切な Mandate の選択方法は Shopping Agent の実装に依存し、この仕様の対象外です。
-
-Verifier は Mandate を検証します（[検証と処理の規則]()を参照してください）。Mandate を受理または拒否したとき、Verifier は署名付き Mandate Receipt を返さなければなりません。
-
-成功を示す Mandate Receipt を受け取った Agent は、オープンな Mandate、クローズドな Mandate、Mandate Receipt の組を保存します。Receipt に基づいてオープンな Mandate の適用範囲を狭め、多くの場合は再提示できないようにします。
-
-Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持ちます。
-
-- `iss`：必須です。JWT の発行者を示す文字列で、Verifier でなければなりません。
-- `result`：必須です。アクション認可の結果を表す `success` または `error` の列挙値です。
-- `reference`：必須です。受信した Mandate のハッシュを base64url エンコードした文字列です。Mandate の連鎖を受け取った場合は、連鎖の最後の SD-JWT のハッシュです。`sd_hash` と同じ方法で計算します。使用するアルゴリズムは SD-JWT の `_sd_alg` と同じでなければならず、指定がない場合は `sha-256` を使います。
-- `error`：任意です。エラーコードを示す文字列です。`result` が `error` の場合は必須です。
-- `error_description`：任意です。人が読めるエラー説明です。
-
-認可した操作や受け取った Mandate の型に応じた追加プロパティも含められます。
-
-### エラー
-
-すべてのアクション認可で次のエラーを使います。
-
-- `invalid_credential`：Mandate の検証に失敗した場合に返します。終端エラーです。
-- `unresolved_constraint`：Mandate に未知の制約がある場合、またはクローズドな Mandate が制約に適合するか検証できない場合に返します。直接承認されたクローズドな Mandate、または別の非エージェント型フローへの切り替えを促すために使えます。
-- `invalid_mandate`：提示された Mandate が要求された操作を承認していない場合に返します。終端エラーです。
-- `mandates_not_supported`：Verifier がこの操作の承認に Mandate を使えない場合に返します。非エージェント型フローへの切り替えを促すために使えます。
-
-## 参考文献
-
-### 規範的文献
-
-- [OpenID4VP] T. Lodderstedt、K. Yasuda、T. Looker「[OpenID for Verifiable Presentations](https://openid.net/specs/openid4vp-1_0.html)」、OpenID Foundation、2024年。
-- [SD-JWT] D. Fett、B. Campbell、K. Yasuda、M. B. Jones「[Selective Disclosure for JWTs（SD-JWT）](https://datatracker.ietf.org/doc/rfc9901/)」、2025年2月。
-- [Delegate SD-JWT] G. Oliver「[Delegate SD-JWT（個人草案）](https://github.com/GarethCOliver/gco-delegate-sd-jwt)」、2026年。
-- [RFC7800] M. B. Jones、J. Bradley、H. Tschofenig「[Proof-of-Possession Key Semantics for JSON Web Tokens（JWTs）](https://datatracker.ietf.org/doc/html/rfc7800)」、2016年4月。
-
-### 参考情報
-
-- [OpenID4VCI] T. Lodderstedt、K. Yasuda、T. Looker「[OpenID for Verifiable Credential Issuance](https://openid.net/specs/openid4vc-issuance-1_0.html)」、OpenID Foundation、2024年。
-- [ISO18013-5] ISO/IEC JTC 1/SC 17「[ISO/IEC 18013-5:2021 Personal identification — ISO-compliant driving licence — Part 5: Mobile driving licence (mDL) application](https://www.iso.org/standard/69084.html)」、2021年9月。
-- [ISO18013-7] ISO/IEC JTC 1/SC 17「[ISO/IEC 18013-7:2024 Personal identification — ISO-compliant driving licence — Part 7: Mobile driving licence (mDL) add-on functions](https://www.iso.org/standard/82763.html)」、2024年10月。
-
-
-## 原文のデータ例
-
-以下に示す JSON は、原文に掲載されたサンプルです。プロトコルの値と構造を保つため、フィールド名や値は翻訳していません。
-
-### サンプル 1
+以下は Checkout Mandate と Payment Mandate を委任する OpenID4VP Authorization Request の参考例です。
+読みやすさのため、base64url エンコード文字列の一部を省略しています。
 
 ```json
 {
@@ -243,7 +119,11 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 }
 ```
 
-### サンプル 2
+**デコードした `transaction_data` のペイロード（参考）**
+
+`transaction_data` 配列には、base64url エンコードされた2つの JSON オブジェクトが含まれます。
+
+**インデックス0（支払いカードの UI データ）**は、支払いの承認前にユーザーに表示する確認 UI を定義します。
 
 ```json
 {
@@ -256,7 +136,7 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 }
 ```
 
-### サンプル 3
+**インデックス1（委任する Mandate）**は、`delegate_payload` を通じて、支払いを特定の Checkout Mandate と Payment Mandate の内容に暗号学的に結び付けます。
 
 ```json
 {
@@ -298,7 +178,8 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 }
 ```
 
-### サンプル 4
+以下は、ユーザーが署名した Checkout Mandate と Payment Mandate を含む OpenID4VP Authorization Response の参考例です。
+読みやすさのため、長い文字列の一部を省略しています。
 
 ```json
 {
@@ -313,7 +194,10 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 }
 ```
 
-### サンプル 5
+`dpc_credential` は、各要素を `~` で区切った SD-JWT です。
+デコードしたペイロードと開示情報を以下に示します。
+
+**SD-JWT 本体のペイロード（発行者が発行した資格情報）**
 
 ```json
 {
@@ -339,7 +223,9 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 }
 ```
 
-### サンプル 6
+**選択的開示**
+
+販売者が要求した3つのクレームだけを開示し、残りのフィールドは `_sd` のハッシュで秘匿します。
 
 ```json
 [
@@ -349,7 +235,26 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 ]
 ```
 
-### サンプル 7
+1つの Authorization Request 内で `delegate_payload` 配列に複数の要素を指定し、複数の Mandate を委任することもできます。
+
+### Trusted Agent Provider
+
+この方式では検証者が Agent Provider を直接信頼し、適切なユーザーの同意と認可を得た後でのみ Agent Provider が Mandate を作成することを保証します。事前に発行された資格情報は必要ありません。
+
+<figure markdown="span">
+  ![Trusted Agent Provider による Mandate 委任](../assets/mandate_delegation_trusted_agent_provider.svg){ style="width:100%" }
+  <figcaption align="center">Trusted Agent Provider による Mandate 委任</figcaption>
+</figure>
+
+- エージェントは Mandate の内容を作成し、Agent Provider が管理する Trusted Surface に渡します。たとえば、アプリケーション内の決定論的な別コンポーネントを使います。
+- Agent Provider の Trusted Surface は Mandate の内容をユーザーに表示し、必要な承認と同意を取得します。
+- Agent Provider は安全に保管された署名鍵で Mandate を作成します。たとえば Trusted Surface から Agent Provider のバックエンドに連絡して署名を依頼します。
+
+Agent Provider は、エージェントが Agent Provider の署名鍵にアクセスできず、Trusted Surface を経由しない限り鍵を使えないようにしなければなりません。リスクの詳細は [セキュリティとプライバシーに関する考慮事項](security_and_privacy_considerations.ja.md) を参照してください。
+
+以下は、Agent Provider が Checkout Mandate を `sd-jwt-vc` ペイロードとして作成する参考例です。
+
+**デコードした最上位のペイロード**
 
 ```json
 {
@@ -363,7 +268,10 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 }
 ```
 
-### サンプル 8
+**デコードした開示情報（オープンな Mandate）**
+
+末尾が `uq0EE` のハッシュに対応する開示情報が、オープンな Mandate を示します。
+制約配列に含まれる購入可能な商品と利用可能な販売者も、ハッシュで秘匿されています。
 
 ```json
 [
@@ -397,7 +305,9 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 ]
 ```
 
-### サンプル 9
+**デコードした開示情報（入れ子の配列の要素）**
+
+エージェントは、上の制約配列で許可された商品の明細と販売者を選択的に開示できます。
 
 ```json
 [
@@ -409,8 +319,6 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
 ]
 ```
 
-### サンプル 10
-
 ```json
 [
   "NAhMECHMBjd978UDQqsAYA",
@@ -421,3 +329,96 @@ Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持�
   }
 ]
 ```
+
+## Mandate の構造
+
+Mandate は、ユーザーが承認した元の Mandate から、Verifier の操作を認可するクローズドな Mandate までを暗号学的に検証可能な連鎖として構成します。
+
+Mandate には2つの状態があります。
+
+- **クローズド**：Verifier との特定の取引に結び付いており、エージェントの操作を認可します。Agent はオープンな Mandate の `cnf` クレームで指定された鍵を使い、Key Binding JWT（Proof-of-Possession）を生成します。
+- **オープン**：まだ特定の取引に結び付いていません。クローズドな Mandate に記載できる内容の制約を持ち、その Mandate を使える特定の Agent に結び付いています。
+
+オープンな Mandate を使うことで、ユーザーが不在の間もエージェントは自律的に操作できます。同時に、その動作を適切な範囲に制限できます。
+
+<figure markdown="span">
+  ![オープンとクローズドな Mandate の連鎖例](../assets/mandate_chain_example.svg){ style="width:800px" }
+  <figcaption align="center">Mandate の連鎖例</figcaption>
+</figure>
+
+図は、同じ操作（A を使った doX）をユーザーが認可する2つの例を示します。「人が参加する」場合、ユーザーがクローズドな Mandate の内容に直接署名します。もう一方では、ユーザーがオープンな Mandate の内容に署名し、エージェントがユーザーに代わってクローズドな Mandate に署名します。認可を示すため、エージェントは Mandate の連鎖全体を提示します。
+
+オープンな Mandate は利用前に特定の取引に結び付ける必要があるため、暗号学的な Key Binding に対応しなければなりません。
+
+### SD-JWT VC を使う Mandate
+
+[SD-JWT](#references) は JSON を暗号学的に保護し、Mandate に役立つ機能を提供します。Key Binding によってユーザー不在時にエージェントが所有証明と取引への結び付きを示せます。また、選択的開示で制約のうち適用対象だけを開示し、ユーザーのプライバシーを守りながらエージェントに判断の柔軟性を持たせられます。
+
+> 注：この文書では SD-JWT VC を使いますが、ISO mDocs などの VDC も利用できます。
+
+SD-JWT の Mandate Content には次のクレームを含みます。
+
+- `vct`：必須です。資格情報の型に加えて Mandate の型を一意に識別する文字列です。
+- `constraints`：任意です。クローズドな Mandate に含められる内容を制約する、拡張可能なオブジェクトの配列です。各制約には一意な `type` が必須で、その他のプロパティは制約の型によって異なります。
+- `cnf`：任意です。[RFC 7800](#references) で定義される Proof-of-Possession 鍵の確認方法を含みます。Mandate がオープンな場合は必須です。
+
+Mandate の型に応じて、ほかのプロパティも含められます。オープンな Mandate は、対象型の必須フィールドをすべて持つ必要はありませんが、最終的なクローズドな Mandate には必須フィールドを含めなければなりません。SD-JWT VC の任意のクレームも利用できます。
+
+AP2 仕様では支払い用の Mandate 型と制約型を定めます。別の用途向けに新たな型を定義することもできます。名前の衝突を避けるため、定義主体が管理する rDNS プレフィックスや適切な URN など、衝突耐性のある命名方法を推奨します。
+
+#### 検証と処理の規則 { #verification-and-processing-rules }
+
+SD-JWT Mandate の連鎖は次の規則に従って検証し、処理します。
+
+1. [Delegate SD-JWT](#references) に従って SD-JWT の連鎖を検証し、処理します。
+2. オープンな Mandate の内容からクレームを抽出し、クローズドな Mandate の内容に同じ値が変更されずに含まれていることを確認します。
+3. 各オープンな Mandate の内容から制約をすべて抽出し、制約型に従ってクローズドな Mandate の内容と照合します。未知の制約は評価失敗として扱わなければなりません。
+
+## アクションの認可
+
+アクションの認可は Agent と Verifier の間で行います。購入の実行など、特定の操作に適切な認可があることを Agent に証明させる必要が生じたときに実施します。
+
+1. Verifier と Agent は、Verifier がユーザーによる認可の証明を求める段階までやり取りします。
+2. Verifier は操作の認可を示す Mandate の提示を要求します。
+3. Agent は適切な Mandate を選んで提示します。Mandate がオープンな場合、Mandate が認めた鍵を使って取引に結び付けます。
+4. Verifier は Mandate の完全性と、Mandate の内容が Agent の実行しようとする操作を許可していることを検証します。
+
+選択的開示がある場合、Agent は認可を示すために必要な情報を提示しつつ、ユーザーのプライバシーを最大限に守れる開示内容を選ばなければなりません。適切な Mandate の選択方法は Shopping Agent の実装に依存し、この仕様の対象外です。
+
+Verifier は Mandate を検証します（[検証と処理の規則](#verification-and-processing-rules) を参照してください）。Mandate を受理または拒否したとき、Verifier は署名付き Mandate Receipt を返さなければなりません。
+
+成功を示す Mandate Receipt を受け取った Agent は、オープンな Mandate、クローズドな Mandate、Mandate Receipt の組を保存します。Receipt に基づいてオープンな Mandate の適用範囲を狭め、多くの場合は再提示できないようにします。
+
+Mandate Receipt は Verifier 署名付き JWT で、次のプロパティを持ちます。
+
+- `iss`：必須です。JWT の発行者を示す文字列で、Verifier でなければなりません。
+- `result`：必須です。アクション認可の結果を表す `success` または `error` の列挙値です。
+- `reference`：必須です。受信した Mandate のハッシュを base64url エンコードした文字列です。Mandate の連鎖を受け取った場合は、連鎖の最後の SD-JWT のハッシュです。`sd_hash` と同じ方法で計算します。使用するアルゴリズムは SD-JWT の `_sd_alg` と同じでなければならず、指定がない場合は `sha-256` を使います。
+- `error`：任意です。エラーコードを示す文字列です。`result` が `error` の場合は必須です。
+- `error_description`：任意です。人が読めるエラー説明です。
+
+認可した操作や受け取った Mandate の型に応じた追加プロパティも含められます。
+
+### エラー
+
+すべてのアクション認可で次のエラーを使います。
+
+- `invalid_credential`：Mandate の検証に失敗した場合に返します。終端エラーです。
+- `unresolved_constraint`：Mandate に未知の制約がある場合、またはクローズドな Mandate が制約に適合するか検証できない場合に返します。直接承認されたクローズドな Mandate、または別の非エージェント型フローへの切り替えを促すために使えます。
+- `invalid_mandate`：提示された Mandate が要求された操作を承認していない場合に返します。終端エラーです。
+- `mandates_not_supported`：Verifier がこの操作の承認に Mandate を使えない場合に返します。非エージェント型フローへの切り替えを促すために使えます。
+
+## 参考文献 { #references }
+
+### 規範的文献
+
+- [OpenID4VP] T. Lodderstedt、K. Yasuda、T. Looker「[OpenID for Verifiable Presentations](https://openid.net/specs/openid4vp-1_0.html)」、OpenID Foundation、2024年。
+- [SD-JWT] D. Fett、B. Campbell、K. Yasuda、M. B. Jones「[Selective Disclosure for JWTs（SD-JWT）](https://datatracker.ietf.org/doc/rfc9901/)」、2025年2月。
+- [Delegate SD-JWT] G. Oliver「[Delegate SD-JWT（個人草案）](https://github.com/GarethCOliver/gco-delegate-sd-jwt)」、2026年。
+- [RFC7800] M. B. Jones、J. Bradley、H. Tschofenig「[Proof-of-Possession Key Semantics for JSON Web Tokens（JWTs）](https://datatracker.ietf.org/doc/html/rfc7800)」、2016年4月。
+
+### 参考情報
+
+- [OpenID4VCI] T. Lodderstedt、K. Yasuda、T. Looker「[OpenID for Verifiable Credential Issuance](https://openid.net/specs/openid4vc-issuance-1_0.html)」、OpenID Foundation、2024年。
+- [ISO18013-5] ISO/IEC JTC 1/SC 17「[ISO/IEC 18013-5:2021 Personal identification — ISO-compliant driving licence — Part 5: Mobile driving licence (mDL) application](https://www.iso.org/standard/69084.html)」、2021年9月。
+- [ISO18013-7] ISO/IEC JTC 1/SC 17「[ISO/IEC 18013-7:2024 Personal identification — ISO-compliant driving licence — Part 7: Mobile driving licence (mDL) add-on functions](https://www.iso.org/standard/82763.html)」、2024年10月。
